@@ -1,0 +1,26 @@
+{
+  "name": "@mastashake08/web-iot",
+  "version": "1.0.0",
+  "description": "Connect to your IoT devices via usb, serial, NFC or Bluetooth",
+  "main": "WebIOT.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mastashake08/web-iot.git"
+  },
+  "keywords": [
+    "iot",
+    "webserial",
+    "bluetooth",
+    "webusb",
+    "nfc"
+  ],
+  "author": "Mastashake",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mastashake08/web-iot/issues"
+  },
+  "homepage": "https://github.com/mastashake08/web-iot#readme"
+}
