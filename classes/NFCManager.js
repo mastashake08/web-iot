@@ -1,19 +1,16 @@
-export default class WebIOT {
-  nfc = {}
-  constructor () {}
+export class NFCManager {
+  #nfc = {}
+  constructor () {
+    if ('NDEFReader' in window) { /* Scan and write NFC tags */
+      this.nfc = new NDEFReader()
+    } else {
+      alert('NFC is not supported in your browser')
+    }
 
-  //Serial
-  startSerialConnection (vendorId, cb) {}
-  getAvailableSerialPorts () {}
-  readSerialData (port, success, over = () => {}, failure = (error) => {console.log(error)}) {}
-  writeSerialData (port, cb) {}
+  }
 
-  //USB
-  getUSBDevices() {}
-  startBluetoothConnection (vendorId, cb) {}
-
-  //NFC
   startNFC () {
+
     this.nfc = new NDEFReader()
   }
   async readNFCData (readCb, errorCb = (event) => console.log(event)) {
