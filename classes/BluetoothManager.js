@@ -59,4 +59,8 @@ export class BluetoothManager extends WebIOT {
     this.currentValue = await this.characteristic.readValue()
     return this.currentValue
   }
+
+  async writeValue(data) {
+    await this.characteristic.writeValue(data)
+  }
 }

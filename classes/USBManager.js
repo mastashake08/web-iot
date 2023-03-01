@@ -33,6 +33,10 @@ export class USBManager extends WebIOT{
 
   }
 
-  async writeData(endpointNumber, data) {}
-  async readData(endpointNumber, data) {}
+  async writeData(endpointNumber, data) {
+    return await this.selectedDevice.transferOut(endpointNumber, data)
+  }
+  async readData(endpointNumber, data) {
+    return await this.selectedDevice.transferIn(endpointNumber, data)
+  }
 }
