@@ -1,4 +1,5 @@
-export class BluetoothManager {
+import { WebIOT } from './WebIOT'
+export class BluetoothManager extends WebIOT {
   #bluetooth = {}
   #device = {}
   #server = {}
@@ -6,7 +7,8 @@ export class BluetoothManager {
   #services = {}
   #characteristic = {}
   #currentValue = null
-  constructor () {
+  constructor (debug = false) {
+    super(debug)
     navigator.bluetooth.getAvailability().then((available) => {
       if (available) {
         this.bluetooth = navigator.bluetooth

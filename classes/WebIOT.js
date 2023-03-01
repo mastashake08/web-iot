@@ -1,32 +1,52 @@
-import { NFCManager } from './NFCManager'
 export class WebIOT {
-  nfc = {}
-  constructor () {}
+  debug = false
+  constructor(debug = false) {
+    this.debug = debug
+  }
+  sendData (url, options = {}, type='fetch') {
+      try {
+        switch (type) {
+          case 'fetch':
+            return this.sendFetch(url, options)
+            break;
+          case 'beacon':
+            return this.sendBeacon(url, options)
+            break;
+          default:
+            return this.sendFetch(url, options)
+        }
+      } catch (e) {
+        this.handleError(e)
+      }
+  }
 
-  //Serial
-  startSerialConnection (vendorId, cb) {}
-  getAvailableSerialPorts () {}
-  readSerialData (port, success, over = () => {}, failure = (error) => {console.log(error)}) {}
-  writeSerialData (port, cb) {}
+  sendBeacon (url, data) {
+    try {
+      navigator.sendBeacon(url, data)
+    } catch (e) {
+      this.handleError(e)
+    }
+  }
 
-  //USB
-  getUSBDevices() {}
-  startBluetoothConnection (vendorId, cb) {}
+  async sendFetch(url, options) {
+    try {
+      const res = await fetch(url, options)
+      if (res.status != 200) {
+        throw new Error(`HTTP error! Status: ${res.status}`)
+      } else {
+        return res
+      }
+    } catch (e) {
+      this.handleError(e)
+    }
+  }
 
-  //NFC
-  startNFC () {
-    this.nfc = new NFCManager()
-  }
-  readNFCData (readCb, errorCb = (event) => console.log(event)) {
-    this.nfc.readNFCData(readCb, errorCb)
-  }
-  writeNFCData (records, errorCb = (event) => console.log(event)) {
-    this.nfc.writeNFCData(records, errorCb)
-  }
-  lockNFCTag(errorCb = (event) => console.log(event)) {
-    this.nfc.lockNFCTag(errorCb)
-  }
-  static generateNFC () {
-    return new NFCManager()
+  handleError (e) {
+    if(this.debug) {
+      alert(e.message)
+      console.log(e.message)
+    } else {
+      throw e
+    }
   }
 }

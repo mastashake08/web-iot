@@ -1,8 +1,9 @@
-export class SerialManager {
+import { WebIOT } from './WebIOT'
+export class SerialManager extends WebIOT {
   #ports = {}
   #selectedPort = {}
-  constructor () {
-
+  constructor (debug = false) {
+    super(debug)
   }
 
   async getPorts () {

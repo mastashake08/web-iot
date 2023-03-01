@@ -1,8 +1,9 @@
-export class USBManager {
+import { WebIOT } from './WebIOT'
+export class USBManager extends WebIOT{
   #devices = {}
   #selectedDevice = {}
-  constructor () {
-
+  constructor (debug = false) {
+    super(debug)
   }
 
   async getDevices () {

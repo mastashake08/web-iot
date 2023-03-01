@@ -1,6 +1,8 @@
-export class NFCManager {
+import { WebIOT } from './WebIOT'
+export class NFCManager extends WebIOT {
   #nfc = {}
-  constructor () {
+  constructor (debug = false) {
+    super(debug)
     if ('NDEFReader' in window) { /* Scan and write NFC tags */
       this.nfc = new NDEFReader()
     } else {
