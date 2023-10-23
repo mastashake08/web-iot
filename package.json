@@ -1,6 +1,6 @@
 {
   "name": "web-iot",
-  "version": "1.2.1",
+  "version": "1.2.5",
   "description": "Connect to your IoT devices via usb, serial, NFC or Bluetooth",
   "main": "index.js",
   "scripts": {

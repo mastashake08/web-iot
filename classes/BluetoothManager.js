@@ -7,11 +7,13 @@ export class BluetoothManager extends WebIOT {
   #services = {}
   #characteristic = {}
   #currentValue = null
-  constructor (debug = false) {
+  constructor (callback = ()=>({}), debug = false) {
     super(debug)
     navigator.bluetooth.getAvailability().then((available) => {
       if (available) {
         this.bluetooth = navigator.bluetooth
+
+        this.bluetooth.onadvertisementreceived = callback
       } else {
         alert("Doh! Bluetooth is not supported");
       }
@@ -19,10 +21,12 @@ export class BluetoothManager extends WebIOT {
 
   }
 
-  async getDevices (options = {acceptAllDevices: true}) {
+  async requestDevice (options = {acceptAllDevices: true}) {
     return await this.requestDevice(options)
   }
-
+  async getDevices (options = {}) {
+    return await navigator.bluetooth.getDevices(options)
+  }
   async requestDevice (options) {
     try {
       this.device = await navigator.bluetooth.requestDevice(options)
@@ -64,8 +68,7 @@ export class BluetoothManager extends WebIOT {
     await this.characteristic.writeValue(data)
   }
 
-  startLEScan(options, callback) {
+  startLEScan(options) {
     this.bluetooth.requestLEScan(options)
-    this.bluetooth.onadvertisementreceived = callback
   }
 }
