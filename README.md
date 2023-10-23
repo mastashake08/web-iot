@@ -2,7 +2,7 @@
 Connect to and interact with your IoT devices over a variety of connections including:
 - Serial
 - USB
-- Bluetooth
+- Serial
 - NFC
 - More coming!
 
@@ -13,7 +13,7 @@ Connect to and interact with your IoT devices over a variety of connections incl
 
 ### Usage Via USB
 
-### Usage Via Bluetooth
+### Usage Via Serial
 
 ### Usage Via NFC
 

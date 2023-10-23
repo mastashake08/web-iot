@@ -17,7 +17,7 @@ export class SerialManager extends WebIOT {
   }
 
   async openPort(options) {
-    await this.selectedPort.open(options)
+    return await this.selectedPort.open(options)
   }
 
   async closePort(options) {
@@ -25,7 +25,7 @@ export class SerialManager extends WebIOT {
   }
 
   async getInfo() {
-    await this.selectedPort.getInfo()
+    return await this.selectedPort.getInfo()
   }
 
   async setSignals(options) {
@@ -53,10 +53,11 @@ export class SerialManager extends WebIOT {
   }
 
   async writeData(data) {
-    const writer = port.writable.getWriter();
+    const writer = this.selectedPort.writable.getWriter();
 
     await writer.write(data);
     // Allow the serial port to be closed later.
+    
     writer.releaseLock();
   }
 }
