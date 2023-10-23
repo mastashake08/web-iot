@@ -1,6 +1,6 @@
 {
   "name": "@mastashake08/web-iot",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Connect to your IoT devices via usb, serial, NFC or Bluetooth",
   "main": "index.js",
   "scripts": {
