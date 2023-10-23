@@ -1,5 +1,5 @@
 import { WebIOT } from './WebIOT'
-export class SerialManager extends WebIOT {
+export class BluetoothManager extends WebIOT {
   #Serial = {}
   #device = {}
   #server = {}

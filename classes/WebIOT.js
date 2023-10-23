@@ -49,4 +49,6 @@ export class WebIOT {
       throw e
     }
   }
+
+  logData() {}
 }
