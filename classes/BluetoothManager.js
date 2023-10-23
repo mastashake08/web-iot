@@ -1,6 +1,6 @@
 import { WebIOT } from './WebIOT'
 export class BluetoothManager extends WebIOT {
-  #Serial = {}
+  #bluetooth = {}
   #device = {}
   #server = {}
   #selectedService = {}
@@ -9,24 +9,24 @@ export class BluetoothManager extends WebIOT {
   #currentValue = null
   constructor (callback = (event)=>{console.log(event)}, debug = false) {
     super(debug)
-    navigator.Serial.getAvailability().then((available) => {
+    navigator.bluetooth.getAvailability().then((available) => {
       if (available) {
-        this.Serial = navigator.Serial
+        this.bluetooth = navigator.bluetooth
 
-        this.Serial.onadvertisementreceived = callback
+        this.bluetooth.onadvertisementreceived = callback
       } else {
-        alert("Doh! Serial is not supported");
+        alert("Doh! bluetooth is not supported");
       }
     }).catch((e) => {console.log(e)});
 
   }
 
   async getDevices (options = {}) {
-    return await navigator.Serial.getDevices(options)
+    return await navigator.bluetooth.getDevices(options)
   }
   async requestDevice (options = {acceptAllDevices: true}) {
     try {
-      this.device = await navigator.Serial.requestDevice(options)
+      this.device = await navigator.bluetooth.requestDevice(options)
       return this.device
     } catch(e) {
       alert(e.message)
@@ -74,6 +74,6 @@ export class BluetoothManager extends WebIOT {
   }
 
   async startLEScan(options = {acceptAllDevices: true}) {
-    return await this.Serial.requestLEScan(options)
+    return await this.bluetooth.requestLEScan(options)
   }
 }

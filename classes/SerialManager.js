@@ -44,6 +44,7 @@ export class SerialManager extends WebIOT {
       const { value, done } = await reader.read();
       if (done) {
         // Allow the serial port to be closed later.
+        console.log('done')
         reader.releaseLock();
         break;
       }
