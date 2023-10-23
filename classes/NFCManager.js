@@ -15,8 +15,8 @@ export class NFCManager extends WebIOT {
 
     this.nfc = new NDEFReader()
   }
-  async readNFCData (readCb, errorCb = (event) => console.log(event)) {
-    this.nfc.onreading = readCb()
+  async readNFCData (readCb = (event) => {console.log(event)}, errorCb = (event) => console.log(event)) {
+    this.nfc.onreading = readCb
     await this.nfc.scan()
   }
   async writeNFCData (records, errorCb = (event) => console.log(event)) {
