@@ -15,7 +15,7 @@ export class BluetoothManager extends WebIOT {
       } else {
         alert("Doh! Bluetooth is not supported");
       }
-    });
+    }).catch((e) => {console.log(e)});
 
   }
 
@@ -62,5 +62,10 @@ export class BluetoothManager extends WebIOT {
 
   async writeValue(data) {
     await this.characteristic.writeValue(data)
+  }
+
+  startLEScan(options, callback) {
+    this.bluetooth.requestLEScan(options)
+    this.bluetooth.onadvertisementreceived = callback
   }
 }
