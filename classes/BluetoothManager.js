@@ -7,7 +7,7 @@ export class BluetoothManager extends WebIOT {
   #services = {}
   #characteristic = {}
   #currentValue = null
-  constructor (callback = ()=>({}), debug = false) {
+  constructor (callback = (event)=>{console.log(event)}, debug = false) {
     super(debug)
     navigator.bluetooth.getAvailability().then((available) => {
       if (available) {
@@ -21,13 +21,10 @@ export class BluetoothManager extends WebIOT {
 
   }
 
-  async requestDevice (options = {acceptAllDevices: true}) {
-    return await this.requestDevice(options)
-  }
   async getDevices (options = {}) {
     return await navigator.bluetooth.getDevices(options)
   }
-  async requestDevice (options) {
+  async requestDevice (options = {acceptAllDevices: true}) {
     try {
       this.device = await navigator.bluetooth.requestDevice(options)
       return this.device
@@ -36,8 +33,15 @@ export class BluetoothManager extends WebIOT {
     }
   }
 
-  async connectToServer () {
-    this.server = await this.device.gatt.connect()
+  async connectToServer (disconnect = (event)=>{console.log(event)}, serviceadded = (event)=>{console.log(event)}) {
+    try {
+      this.server = await this.device.gatt.connect()
+      this.device.gattserverdisconnected = disconnect
+      this.device.gatt.serviceadded = serviceadded
+    } catch {
+      console.log('Could not connect to server')
+    }
+    
   }
 
   async getService (service) {
@@ -50,8 +54,9 @@ export class BluetoothManager extends WebIOT {
     return this.services
   }
 
-  async getCharacteristic (char) {
+  async getCharacteristic (char, valueChanged = (event)=>{console.log(event)}) {
     this.characteristic = await this.selectedService.getCharacteristic(char)
+    this.characteristic.characteristicvaluechanged = valueChanged
     return this.characteristic
   }
 
@@ -68,7 +73,7 @@ export class BluetoothManager extends WebIOT {
     await this.characteristic.writeValue(data)
   }
 
-  startLEScan(options) {
-    this.bluetooth.requestLEScan(options)
+  async startLEScan(options = {acceptAllDevices: true}) {
+    return await this.bluetooth.requestLEScan(options)
   }
 }
