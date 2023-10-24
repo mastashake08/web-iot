@@ -4,20 +4,23 @@ export class NFCManager extends WebIOT {
   constructor (debug = false) {
     super(debug)
     if ('NDEFReader' in window) { /* Scan and write NFC tags */
-      this.nfc = new NDEFReader()
+      this.startNFC()
     } else {
       alert('NFC is not supported in your browser')
     }
-
   }
 
   startNFC () {
-
     this.nfc = new NDEFReader()
   }
+  
   async readNFCData (readCb = (event) => {console.log(event)}, errorCb = (event) => console.log(event)) {
-    this.nfc.onreading = readCb
+    try {
     await this.nfc.scan()
+    this.nfc.onreading = readCb
+    } catch(e) {
+      errorCb(e)
+    }
   }
   async writeNFCData (records, errorCb = (event) => console.log(event)) {
     try {

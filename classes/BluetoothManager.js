@@ -16,6 +16,7 @@ export class BluetoothManager extends WebIOT {
         this.bluetooth.onadvertisementreceived = callback
       } else {
         alert("Doh! bluetooth is not supported");
+        throw new Error("Doh! bluetooth is not supported")
       }
     }).catch((e) => {console.log(e)});
 

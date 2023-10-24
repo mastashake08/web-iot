@@ -3,6 +3,11 @@ export class USBManager extends WebIOT{
   #devices = {}
   #selectedDevice = {}
   constructor (debug = false) {
+    if('usb' in navigator) {
+
+    } else {
+      alert('USB not available on this device')
+    }
     super(debug)
   }
 

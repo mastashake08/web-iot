@@ -3,7 +3,11 @@ export class SerialManager extends WebIOT {
   #ports = {}
   #selectedPort = {}
   constructor (debug = false) {
+    if ('serial' in navigator) { /* Scan and write NFC tags */
     super(debug)
+  } else {
+    alert('NFC is not supported in your browser')
+  }
   }
 
   async getPorts () {
