@@ -6,7 +6,7 @@ export class SerialManager extends WebIOT {
     if ('serial' in navigator) { /* Scan and write NFC tags */
     super(debug)
   } else {
-    alert('NFC is not supported in your browser')
+    alert('Serial is not supported in your browser')
   }
   }
 
@@ -41,25 +41,34 @@ export class SerialManager extends WebIOT {
   }
 
   async readData () {
-    const reader = this.selectedPort.readable.getReader();
+    
+    while(this.selectedPort.readable){
+      try {
+        const reader = this.selectedPort.readable.getReader();
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) {
+            // Allow the serial port to be closed later.
+            console.log('done')
+            reader.releaseLock();
+            break;
+          }
+          console.log(value.buffer)
+          console.log(done)
+          // value is a Uint8Array.
+          return value
+        }
+      } catch (e) {
 
-    // Listen to data coming from the serial device.
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) {
-        // Allow the serial port to be closed later.
-        console.log('done')
-        reader.releaseLock();
-        break;
       }
-      // value is a Uint8Array.
-      return value
+      
     }
+    
   }
 
   async writeData(data) {
     const writer = this.selectedPort.writable.getWriter();
-
+    
     await writer.write(data);
     // Allow the serial port to be closed later.
     
